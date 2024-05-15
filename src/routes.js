@@ -22,8 +22,57 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import Usuarios from "views/usuario/List.js";
+import Grandezas from "views/grandeza/List.js";
+import TiposEmergencia from "views/tipo-emergencia/List.js";
+import Sensores from "views/sensor/List.js";
+import Zonas from "views/zona/List.js";
+import Udes from "views/ude/List.js";
 
 var routes = [
+  {
+    path: "/usuarios",
+    name: "Usuários",
+    icon: "ni ni-single-02 text-gray",
+    component: <Usuarios />,
+    layout: "/admin",
+  },
+  {
+    path: "/grandezas",
+    name: "Grandezas",
+    icon: "ni ni-bullet-list-67 text-green",
+    component: <Grandezas />,
+    layout: "/admin",
+  },
+  {
+    path: "/tipos-emergencia",
+    name: "Tipos de Emergência",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <TiposEmergencia />,
+    layout: "/admin",
+  },
+  {
+    path: "/sensores",
+    name: "Sensores",
+    icon: "ni ni-bullet-list-67 text-orange",
+    component: <Sensores />,
+    layout: "/admin",
+  },
+  {
+    path: "/zonas",
+    name: "Zonas",
+    icon: "ni ni-bullet-list-67 text-brown",
+    component: <Zonas />,
+    layout: "/admin",
+  },
+  {
+    path: "/udes",
+    name: "Udes",
+    icon: "ni ni-bullet-list-67 text-blue",
+    component: <Udes />,
+    layout: "/admin",
+  },
+
   {
     path: "/index",
     name: "Dashboard",
