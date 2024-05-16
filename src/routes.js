@@ -23,64 +23,51 @@ import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import Usuarios from "views/usuario/UsuarioList.js";
+import UsuarioForm from "views/usuario/UsuarioForm.js";
 import Grandezas from "views/grandeza/GrandezasList.js";
 import GrandezaForm from "views/grandeza/GrandezaForm.js";
 import TiposEmergencia from "views/tipo-emergencia/TipoEmergenciaList.js";
+import TipoEmergenciaForm from "views/tipo-emergencia/TipoEmergenciaForm.js";
 import Sensores from "views/sensor/SensorList.js";
+import SensorForm from "views/sensor/SensorForm.js";
 import Zonas from "views/zona/ZonaList.js";
+import ZonaForm from "views/zona/ZonaForm.js";
 import Udes from "views/ude/UdeList.js";
+import UdeForm from "views/ude/UdeForm.js";
 
-var routes = [
-  {
-    path: "/usuarios",
-    name: "Usuários",
-    icon: "ni ni-single-02 text-gray",
-    component: <Usuarios />,
-    layout: "/admin",
-  },
-  {
-    path: "/grandezas",
-    name: "Grandezas",
-    icon: "ni ni-bullet-list-67 text-green",
-    component: <Grandezas />,
-    layout: "/admin",
-  },
-  {
-    path: "/grandezas/edit/:id",
-    name: "Formulário de Grandeza",
-    icon: "ni ni-bullet-list-67 text-green",
-    component: <GrandezaForm />,
-    layout: "/admin",
-  },
-  {
-    path: "/tipos-emergencia",
-    name: "Tipos de Emergência",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <TiposEmergencia />,
-    layout: "/admin",
-  },
-  {
-    path: "/sensores",
-    name: "Sensores",
-    icon: "ni ni-bullet-list-67 text-orange",
-    component: <Sensores />,
-    layout: "/admin",
-  },
-  {
-    path: "/zonas",
-    name: "Zonas",
-    icon: "ni ni-bullet-list-67 text-brown",
-    component: <Zonas />,
-    layout: "/admin",
-  },
-  {
-    path: "/udes",
-    name: "Udes",
-    icon: "ni ni-bullet-list-67 text-blue",
-    component: <Udes />,
-    layout: "/admin",
-  },
+const resources = [
+  { name: "usuarios", listComponent: <Usuarios />, formComponent: <UsuarioForm />, label: "Usuários", icon: 'ni-single-02', color: "text-gray" },
+  { name: "grandezas", listComponent: <Grandezas />, formComponent: <GrandezaForm />, label: "Grandezas", icon: 'ni-atom', color: "text-green" },
+  { name: "tipos-emergencia", listComponent: <TiposEmergencia />, formComponent: <TipoEmergenciaForm />, label: "Tipos de Emergência", icon: 'ni-bell-55', color: "text-red" },
+  { name: "sensores", listComponent: <Sensores />, formComponent: <SensorForm />, label: "Sensores", icon: 'ni-sound-wave', color: "text-orange" },
+  { name: "zonas", listComponent: <Zonas />, formComponent: <ZonaForm />, label: "Zonas", icon: 'ni-square-pin', color: "text-brown" },
+  { name: "udes", listComponent: <Udes />, formComponent: <UdeForm />, label: "Udes", icon: 'ni-app', color: "text-blue" },
+];
 
+const routes = [
+  // Hidden Routes
+  ...resources.map(resource => ({
+    show: false,
+    path: `/${resource.name}/edit`,
+    component: resource.formComponent,
+    layout: "/admin",
+  })),
+  ...resources.map(resource => ({
+    show: false,
+    path: `/${resource.name}/edit/:id`,
+    component: resource.formComponent,
+    layout: "/admin",
+  })),
+
+  // Sidebar Routes
+  ...resources.map(resource => ({
+    path: `/${resource.name}`,
+    name: resource.label,
+    icon: `ni ${resource.icon} ${resource.color}`,
+    component: resource.listComponent,
+    layout: "/admin",
+
+  })),
   {
     path: "/index",
     name: "Dashboard",
