@@ -31,14 +31,13 @@ const RecordForm = () => {
     async function fetchData() {
       const response = await GrandezaService.get(id);
       if (response.data) {
-        console.log(response.data)
         setRecord(response.data);
       }
-      setIsLoading(false);
     }
-    if (id) {
+    if (isLoading && id) {
       fetchData();
     }
+    setIsLoading(false);
   }, [id, isLoading]);
 
   return (

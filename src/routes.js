@@ -22,13 +22,13 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
-import Usuarios from "views/usuario/List.js";
+import Usuarios from "views/usuario/UsuarioList.js";
 import Grandezas from "views/grandeza/GrandezasList.js";
 import GrandezaForm from "views/grandeza/GrandezaForm.js";
-import TiposEmergencia from "views/tipo-emergencia/List.js";
-import Sensores from "views/sensor/List.js";
-import Zonas from "views/zona/List.js";
-import Udes from "views/ude/List.js";
+import TiposEmergencia from "views/tipo-emergencia/TipoEmergenciaList.js";
+import Sensores from "views/sensor/SensorList.js";
+import Zonas from "views/zona/ZonaList.js";
+import Udes from "views/ude/UdeList.js";
 
 var routes = [
   {
