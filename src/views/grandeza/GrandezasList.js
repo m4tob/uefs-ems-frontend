@@ -1,4 +1,8 @@
+import Header from "components/Headers/Header.js";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
+  Button,
   Card,
   CardHeader,
   Container,
@@ -9,13 +13,13 @@ import {
   Table,
   UncontrolledDropdown
 } from "reactstrap";
-import Header from "components/Headers/Header.js";
 import GrandezaService from "services/GrandezaService.js";
-import { useEffect, useState } from "react";
 
 const List = () => {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -37,7 +41,6 @@ const List = () => {
           <UncontrolledDropdown>
             <DropdownToggle
               className="btn-icon-only text-light"
-              href="#pablo"
               role="button"
               size="sm"
               color=""
@@ -47,14 +50,19 @@ const List = () => {
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
               <DropdownItem
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  navigate(`/admin/grandezas/edit/${id}`);
+                }}
               >
                 Editar
               </DropdownItem>
               <DropdownItem
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  if (window.confirm('Deseja realmente excluir este registro?')) {
+                    GrandezaService.delete(id);
+                    setIsLoading(true);
+                  }
+                }}
               >
                 Remover
               </DropdownItem>
@@ -73,7 +81,18 @@ const List = () => {
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Gerenciamento de Grandezas</h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <h3 className="text-white mb-0">Gerenciamento de Grandezas</h3>
+                  <Button
+                    color="primary"
+                    size="sm"
+                    onClick={async () => {
+                      navigate("/admin/grandezas/edit");
+                    }}
+                  >
+                    Adicionar
+                  </Button>
+                </div>
               </CardHeader>
               <Table
                 className="align-items-center table-dark table-flush"

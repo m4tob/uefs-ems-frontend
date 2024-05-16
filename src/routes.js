@@ -23,7 +23,8 @@ import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import Usuarios from "views/usuario/List.js";
-import Grandezas from "views/grandeza/List.js";
+import Grandezas from "views/grandeza/GrandezasList.js";
+import GrandezaForm from "views/grandeza/GrandezaForm.js";
 import TiposEmergencia from "views/tipo-emergencia/List.js";
 import Sensores from "views/sensor/List.js";
 import Zonas from "views/zona/List.js";
@@ -42,6 +43,13 @@ var routes = [
     name: "Grandezas",
     icon: "ni ni-bullet-list-67 text-green",
     component: <Grandezas />,
+    layout: "/admin",
+  },
+  {
+    path: "/grandezas/edit/:id",
+    name: "Formulário de Grandeza",
+    icon: "ni ni-bullet-list-67 text-green",
+    component: <GrandezaForm />,
     layout: "/admin",
   },
   {
