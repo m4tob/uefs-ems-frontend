@@ -1,4 +1,5 @@
 import envs from "environment";
+import handleResponse from "./handleResponse";
 
 const baseUrl = `${envs.backendUrl}/usuarios`
 
@@ -9,8 +10,7 @@ const Service = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-    const body = await response.json();
-    const data = body.data;
+    const data = await handleResponse(response);
 
     if (data?.bearerToken) {
       await Promise.all([

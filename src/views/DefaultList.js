@@ -23,14 +23,32 @@ const DefaultList = (service, resource, recordsName, headers, attributes) => {
 
     useEffect(() => {
       async function fetchData() {
+        try {
         const response = await service.list();
-        setResults(response.data);
+          setResults(response);
+        } catch (error) {
+          console.error(error);
+          alert('Erro ao carregar registros');
+        }
       }
       if (isLoading) {
         fetchData();
       }
       setIsLoading(false);
     }, [isLoading]);
+
+    const deleteRecord = async (e) => {
+      e.preventDefault();
+      if (window.confirm('Deseja realmente excluir este registro?')) {
+        try {
+          await service.delete(e.target.value);
+          setIsLoading(true);
+        } catch (error) {
+          console.error(error);
+          alert('Erro ao excluir registro');
+        }
+      }
+    };
 
     const RecordRow = (record) => {
       return (
@@ -70,13 +88,7 @@ const DefaultList = (service, resource, recordsName, headers, attributes) => {
                   Editar
                 </DropdownItem>
                 <DropdownItem
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (window.confirm('Deseja realmente excluir este registro?')) {
-                      service.delete(record.id);
-                      setIsLoading(true);
-                    }
-                  }}
+                  onClick={deleteRecord}
                 >
                   Remover
                 </DropdownItem>

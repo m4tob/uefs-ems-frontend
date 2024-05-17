@@ -16,9 +16,12 @@ const DefaultSelect = (recordName, inputName, service, getLabel) => {
 
     useEffect(() => {
       async function fetchData() {
-        const response = await service.list();
-        if (response.data) {
-          setOptions(response.data);
+        try {
+          const response = await service.list();
+          setOptions(response);
+        } catch (error) {
+          console.error(error);
+          alert('Erro ao carregar opções');
         }
       }
       fetchData();

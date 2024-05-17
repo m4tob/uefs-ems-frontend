@@ -1,3 +1,5 @@
+import handleResponse from "./handleResponse";
+
 const DefaultService = (baseUrl) => {
   const getToken = () => localStorage.getItem('token');
 
@@ -6,14 +8,14 @@ const DefaultService = (baseUrl) => {
       const response = await fetch(baseUrl, {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
-      return await response.json()
+      return handleResponse(response);
     },
 
     async get(id) {
       const response = await fetch(`${baseUrl}/${id}`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
-      return await response.json()
+      return handleResponse(response);
     },
 
     async save(record) {
@@ -24,23 +26,32 @@ const DefaultService = (baseUrl) => {
     },
 
     async create(record) {
-      return await fetch(baseUrl, {
+      const response = await fetch(baseUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
         body: JSON.stringify(record),
       });
+
+      return handleResponse(response);
     },
 
     async edit(id, record) {
-      return await fetch(`${baseUrl}/${id}`, {
+      const response = await fetch(`${baseUrl}/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
         body: JSON.stringify(record),
       });
+
+      return handleResponse(response);
     },
 
     async delete(id) {
-      return await fetch(`${baseUrl}/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${getToken()}` } });
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+
+      return handleResponse(response);
     },
   }
 }

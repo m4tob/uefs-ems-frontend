@@ -43,8 +43,13 @@ const Login = () => {
 
   const signin = async (e) => {
     e.preventDefault();
-    await AuthService.signIn(credentials);
-    navigate('/admin/index');
+    try {
+      await AuthService.signIn(credentials);
+      navigate('/admin/index');
+    } catch (error) {
+      console.error(error);
+      alert('Credenciais inválidas!');
+    }
   };
 
   const inputsHandler = (e) => {
@@ -57,6 +62,14 @@ const Login = () => {
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardBody className="px-lg-5 py-lg-5">
+            {/* Center div */}
+            <div className="text-center text-muted mb-4">
+              <img
+                style={{ width: '80%', height: 'auto' }}
+                alt="..."
+                src={require("../assets/img/brand/ems-logo.png")}
+              />
+            </div>
             <div className="text-center text-muted mb-4">
               <small>Sign in with credentials</small>
             </div>
@@ -72,7 +85,7 @@ const Login = () => {
                     placeholder="Email"
                     type="email"
                     name="email"
-                    autoComplete="new-email"
+                    autoComplete="email"
                     onChange={inputsHandler}
                   />
                 </InputGroup>
@@ -88,7 +101,7 @@ const Login = () => {
                     placeholder="Password"
                     type="password"
                     name="password"
-                    autoComplete="new-password"
+                    autoComplete="password"
                     onChange={inputsHandler}
                   />
                 </InputGroup>

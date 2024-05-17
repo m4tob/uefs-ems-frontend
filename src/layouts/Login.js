@@ -22,7 +22,6 @@ import { Container, Row } from "reactstrap";
 
 // core components
 import AuthFooter from "components/Footers/AuthFooter.js";
-import LoginNavbar from "components/Navbars/LoginNavbar.js";
 
 import routes from "routes.js";
 
@@ -68,12 +67,7 @@ const Auth = (props) => {
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <LoginNavbar />
         <div className="header bg-gradient-info py-7 py-lg-8">
-          <Container>
-            <div className="header-body text-center mb-7">
-            </div>
-          </Container>
           <div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"

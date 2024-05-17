@@ -28,11 +28,24 @@ const RecordForm = () => {
     setRecord({ ...record, [e.target.name]: e.target.value })
   }
 
+  const saveRecord = async (e) => {
+    try {
+      await GrandezaService.save(record);
+      navigate("/admin/grandezas");
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao salvar registro');
+    }
+  };
+
   useEffect(() => {
     async function fetchData() {
-      const response = await GrandezaService.get(id);
-      if (response.data) {
-        setRecord(response.data);
+      try {
+        const response = await GrandezaService.get(id);
+        setRecord(response);
+      } catch (error) {
+        console.error(error);
+        alert('Erro ao carregar registro');
       }
     }
     if (isLoading && id) {
@@ -40,6 +53,7 @@ const RecordForm = () => {
     }
     setIsLoading(false);
   }, [id, isLoading]);
+
 
   return (
     <>
@@ -128,10 +142,7 @@ const RecordForm = () => {
 
                       <Button
                         color="success"
-                        onClick={async () => {
-                          await GrandezaService.save(record);
-                          navigate("/admin/grandezas");
-                        }}
+                        onClick={saveRecord}
                       >
                         Salvar
                       </Button>

@@ -42,8 +42,13 @@ const AdminNavbar = (props) => {
     async function fetchData() {
       const account = JSON.parse(localStorage.getItem("account"));
       if (account) {
-        const response = await UsuarioService.get(account.id);
-        setAccount(response.data || JSON.parse(account));
+        let response = undefined
+        try {
+          response = await UsuarioService.get(account.id);
+        } catch (error) {
+          console.error(error);
+        }
+        setAccount(response || account);
       }
     }
     if (isLoading) {
@@ -54,8 +59,13 @@ const AdminNavbar = (props) => {
 
   const logout = async (e) => {
     e.preventDefault();
-    await AuthService.signOut();
-    navigate("/login");
+    try {
+      await AuthService.signOut();
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao sair');
+    }
   }
 
   return (
