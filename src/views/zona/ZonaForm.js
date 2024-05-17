@@ -11,7 +11,7 @@ import {
 const RecordForm = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const params = useParams()
   const id = params?.id;

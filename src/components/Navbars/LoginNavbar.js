@@ -18,15 +18,12 @@
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
-  UncontrolledCollapse,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
-  Row,
   Col,
+  Container,
+  Navbar,
+  NavbarBrand,
+  Row,
+  UncontrolledCollapse
 } from "reactstrap";
 
 const AdminNavbar = () => {
@@ -37,7 +34,7 @@ const AdminNavbar = () => {
           <NavbarBrand to="/" tag={Link}>
             <img
               alt="..."
-              src={require("../../assets/img/brand/argon-react-white.png")}
+              src={require("../../assets/img/brand/ems-logo.png")}
             />
           </NavbarBrand>
           <button className="navbar-toggler" id="navbar-collapse-main">
@@ -62,7 +59,7 @@ const AdminNavbar = () => {
                 </Col>
               </Row>
             </div>
-            <Nav className="ml-auto" navbar>
+            {/* <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink className="nav-link-icon" to="/" tag={Link}>
                   <i className="ni ni-planet" />
@@ -95,7 +92,7 @@ const AdminNavbar = () => {
                   <span className="nav-link-inner--text">Profile</span>
                 </NavLink>
               </NavItem>
-            </Nav>
+            </Nav> */}
           </UncontrolledCollapse>
         </Container>
       </Navbar>

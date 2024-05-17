@@ -1,29 +1,33 @@
 import envs from "environment";
 
-const baseUrl = envs.backendUrl
+const baseUrl = `${envs.backendUrl}/usuarios`
 
-const Service = () => {
-  return {
-    async signin(email, password) {
-      const response = await fetch(`${baseUrl}/signin`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+const Service = {
+  async signIn({ email, password }) {
+    const response = await fetch(`${baseUrl}/sign-in`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const body = await response.json();
+    const data = body.data;
 
-      if (response.data) {
-        localStorage.setItem('account', response.data.account);
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('refreshToken', response.data.refreshToken);
-      }
-    },
+    if (data?.bearerToken) {
+      await Promise.all([
+        localStorage.setItem('account', JSON.stringify(data.account)),
+        localStorage.setItem('token', data.bearerToken),
+        localStorage.setItem('refreshToken', data.refreshToken),
+      ]);
+    }
+  },
 
-    async signout(record) {
-      localStorage.removeItem('account');
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
-    },
-  }
+  async signOut(record) {
+    await Promise.all([
+      localStorage.removeItem('account'),
+      localStorage.removeItem('token'),
+      localStorage.removeItem('refreshToken')
+    ]);
+  },
 }
 
 export default Service;

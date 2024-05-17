@@ -16,7 +16,7 @@
 
 */
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   Container,
@@ -28,9 +28,13 @@ import {
   Navbar,
   UncontrolledDropdown
 } from "reactstrap";
+
+import AuthService from 'services/AuthService.js';
 import UsuarioService from "services/UsuarioService";
 
 const AdminNavbar = (props) => {
+  const navigate = useNavigate();
+
   const [account, setAccount] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -48,10 +52,10 @@ const AdminNavbar = (props) => {
     setIsLoading(false);
   }, [isLoading]);
 
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    localStorage.removeItem("account");
-    window.location.href = "/auth/login";
+    await AuthService.signOut();
+    navigate("/login");
   }
 
   return (

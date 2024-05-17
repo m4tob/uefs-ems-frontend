@@ -19,7 +19,7 @@ const DefaultList = (service, resource, recordsName, headers, attributes) => {
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
       async function fetchData() {

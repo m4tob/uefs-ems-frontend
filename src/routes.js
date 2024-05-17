@@ -17,7 +17,7 @@
 */
 import Index from "views/Index.js";
 import Icons from "views/examples/Icons.js";
-import Login from "views/examples/Login.js";
+import Login from "views/Login.js";
 import Maps from "views/examples/Maps.js";
 import Profile from "views/examples/Profile.js";
 import Tables from "views/examples/Tables.js";
@@ -44,6 +44,14 @@ const resources = [
 ];
 
 const routes = [
+  {
+    path: "/*",
+    name: "Login",
+    icon: "ni ni-key-25 text-info",
+    component: <Login />,
+    layout: "/login",
+    show: false,
+  },
   {
     path: "/index",
     name: "Dashboard",
@@ -107,14 +115,6 @@ const routes = [
     icon: "ni ni-bullet-list-67 text-red",
     component: <Tables />,
     layout: "/admin",
-    show: false,
-  },
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: <Login />,
-    layout: "/auth",
     show: false,
   },
 ];
