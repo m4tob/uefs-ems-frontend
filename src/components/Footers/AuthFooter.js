@@ -15,10 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-/*eslint-disable*/
 
-// reactstrap components
-import { NavItem, NavLink, Nav, Container, Row, Col } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 
 const Login = () => {
   return (
@@ -31,14 +29,15 @@ const Login = () => {
                 © {new Date().getFullYear()}{" "}
                 <a
                   className="font-weight-bold ml-1"
-                  href="https://www.creative-tim.com?ref=adr-auth-footer"
+                  href="https://pgcc.uefs.br/"
+                  rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Creative Tim
+                  PGCC UEFS
                 </a>
               </div>
             </Col>
-            <Col xl="6">
+            {/* <Col xl="6">
               <Nav className="nav-footer justify-content-center justify-content-xl-end">
                 <NavItem>
                   <NavLink
@@ -73,7 +72,7 @@ const Login = () => {
                   </NavLink>
                 </NavItem>
               </Nav>
-            </Col>
+            </Col> */}
           </Row>
         </Container>
       </footer>

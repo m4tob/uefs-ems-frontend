@@ -16,24 +16,23 @@
 
 */
 import Index from "views/Index.js";
-import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
-import Register from "views/examples/Register.js";
-import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
-import Usuarios from "views/usuario/UsuarioList.js";
-import UsuarioForm from "views/usuario/UsuarioForm.js";
-import Grandezas from "views/grandeza/GrandezasList.js";
+import Login from "views/examples/Login.js";
+import Maps from "views/examples/Maps.js";
+import Profile from "views/examples/Profile.js";
+import Tables from "views/examples/Tables.js";
 import GrandezaForm from "views/grandeza/GrandezaForm.js";
-import TiposEmergencia from "views/tipo-emergencia/TipoEmergenciaList.js";
-import TipoEmergenciaForm from "views/tipo-emergencia/TipoEmergenciaForm.js";
-import Sensores from "views/sensor/SensorList.js";
+import Grandezas from "views/grandeza/GrandezasList.js";
 import SensorForm from "views/sensor/SensorForm.js";
-import Zonas from "views/zona/ZonaList.js";
-import ZonaForm from "views/zona/ZonaForm.js";
-import Udes from "views/ude/UdeList.js";
+import Sensores from "views/sensor/SensorList.js";
+import TipoEmergenciaForm from "views/tipo-emergencia/TipoEmergenciaForm.js";
+import TiposEmergencia from "views/tipo-emergencia/TipoEmergenciaList.js";
 import UdeForm from "views/ude/UdeForm.js";
+import Udes from "views/ude/UdeList.js";
+import UsuarioForm from "views/usuario/UsuarioForm.js";
+import Usuarios from "views/usuario/UsuarioList.js";
+import ZonaForm from "views/zona/ZonaForm.js";
+import Zonas from "views/zona/ZonaList.js";
 
 const resources = [
   { name: "usuarios", listComponent: <Usuarios />, formComponent: <UsuarioForm />, label: "Usuários", icon: 'ni-single-02', color: "text-gray" },
@@ -45,16 +44,26 @@ const resources = [
 ];
 
 const routes = [
+  {
+    path: "/index",
+    name: "Dashboard",
+    icon: "ni ni-tv-2 text-primary",
+    component: <Index />,
+    layout: "/admin",
+
+  },
   // Hidden Routes
   ...resources.map(resource => ({
     show: false,
     path: `/${resource.name}/edit`,
+    name: resource.label,
     component: resource.formComponent,
     layout: "/admin",
   })),
   ...resources.map(resource => ({
     show: false,
     path: `/${resource.name}/edit/:id`,
+    name: resource.label,
     component: resource.formComponent,
     layout: "/admin",
   })),
@@ -69,18 +78,12 @@ const routes = [
 
   })),
   {
-    path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: <Index />,
-    layout: "/admin",
-  },
-  {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
     component: <Icons />,
     layout: "/admin",
+    show: false,
   },
   {
     path: "/maps",
@@ -88,6 +91,7 @@ const routes = [
     icon: "ni ni-pin-3 text-orange",
     component: <Maps />,
     layout: "/admin",
+    show: false,
   },
   {
     path: "/user-profile",
@@ -95,6 +99,7 @@ const routes = [
     icon: "ni ni-single-02 text-yellow",
     component: <Profile />,
     layout: "/admin",
+    show: false,
   },
   {
     path: "/tables",
@@ -102,6 +107,7 @@ const routes = [
     icon: "ni ni-bullet-list-67 text-red",
     component: <Tables />,
     layout: "/admin",
+    show: false,
   },
   {
     path: "/login",
@@ -109,13 +115,7 @@ const routes = [
     icon: "ni ni-key-25 text-info",
     component: <Login />,
     layout: "/auth",
-  },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: <Register />,
-    layout: "/auth",
+    show: false,
   },
 ];
 export default routes;

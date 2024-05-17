@@ -8,6 +8,7 @@ const DefaultSelect = (recordName, inputName, service, getLabel) => {
     const [id, setId] = useState(value?.id);
 
     const handleChange = (e) => {
+      e.preventDefault();
       setId(e.target.value);
       const record = options.find(r => `${r.id}` === e.target.value);
       if (onChange) onChange({ target: { name: e.target.name, value: record } });

@@ -64,9 +64,8 @@ const Index = (props) => {
   return (
     <>
       <Header />
-      {/* Page content */}
       <Container className="mt--7" fluid>
-        <Row>
+        <Row className="mt-5">
           <Col className="mb-5 mb-xl-0" xl="8">
             <Card className="bg-gradient-default shadow">
               <CardHeader className="bg-transparent">

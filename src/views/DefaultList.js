@@ -63,6 +63,7 @@ const DefaultList = (service, resource, recordsName, headers, attributes) => {
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem
                   onClick={(e) => {
+                    e.preventDefault();
                     navigate(`/admin/${resource}/edit/${record.id}`);
                   }}
                 >
@@ -70,6 +71,7 @@ const DefaultList = (service, resource, recordsName, headers, attributes) => {
                 </DropdownItem>
                 <DropdownItem
                   onClick={(e) => {
+                    e.preventDefault();
                     if (window.confirm('Deseja realmente excluir este registro?')) {
                       service.delete(record.id);
                       setIsLoading(true);

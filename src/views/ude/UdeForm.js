@@ -24,6 +24,7 @@ const RecordForm = () => {
   })
 
   const inputsHandler = (e) => {
+    e.preventDefault();
     setRecord({ ...record, [e.target.name]: e.target.value })
   }
 
