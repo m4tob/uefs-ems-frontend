@@ -71,7 +71,7 @@ const Login = () => {
               />
             </div>
             <div className="text-center text-muted mb-4">
-              <small>Sign in with credentials</small>
+              <small>Entrar com as credenciais</small>
             </div>
             <Form role="form">
               <FormGroup className="mb-3">
@@ -112,7 +112,7 @@ const Login = () => {
                   type="button"
                   onClick={signin}
                 >
-                  Sign in
+                  Entrar
                 </Button>
               </div>
             </Form>

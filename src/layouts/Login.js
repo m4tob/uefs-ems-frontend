@@ -25,6 +25,8 @@ import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routes from "routes.js";
 
+import AuthService from 'services/AuthService.js';
+
 const Auth = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
@@ -32,8 +34,8 @@ const Auth = (props) => {
 
   useEffect(() => {
     async function checkStorage() {
-      const token = await localStorage.getItem("token");
-      if (token) {
+      const isAuthorized = await AuthService.isAuthorized();
+      if (isAuthorized) {
         navigate('/admin/index');
       }
     };

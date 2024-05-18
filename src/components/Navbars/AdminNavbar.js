@@ -40,7 +40,7 @@ const AdminNavbar = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      const account = JSON.parse(localStorage.getItem("account"));
+      const account = await AuthService.getAccount();
       if (account) {
         let response = undefined
         try {

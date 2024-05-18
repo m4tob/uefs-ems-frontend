@@ -1,18 +1,31 @@
-export default async function handleResponse(response) {
+import AuthService from './AuthService';
+
+export default async function handleResponse(response, retry) {
   const body = await response.json();
   if (response.ok) {
     return body.data
   }
 
-  const responseErrros = body.errors;
-  const statusError = response.statusText;
+  if (response.status === 401 && response.statusText === 'Unauthorized' && retry) {
+    try {
+      await AuthService.refreshToken();
+      const response = await retry();
 
-  const errors = [statusError]
+      return response;
+    } catch (error) {
+    }
+  }
+
+  const responseErrros = body.errors;
+
+  const errors = [response.statusText]
   // if resposneErrors is an array
   if (Array.isArray(responseErrros)) {
     responseErrros.forEach((error) => {
-      errors.push(error.message);
+      errors.push(error);
     });
+  } else if (responseErrros.message) {
+    errors.push(responseErrros.message);
   }
   throw new Error(errors.join(', '));
 }

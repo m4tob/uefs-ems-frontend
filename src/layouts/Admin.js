@@ -26,6 +26,8 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
 
+import AuthService from 'services/AuthService.js';
+
 const Admin = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
@@ -33,8 +35,8 @@ const Admin = (props) => {
 
   useEffect(() => {
     async function checkStorage() {
-      const token = await localStorage.getItem("token");
-      if (!token) {
+      const isNotAuthorized = !await AuthService.isAuthorized();
+      if (isNotAuthorized) {
         navigate('/login');
       }
     };
