@@ -17,9 +17,14 @@ const DefaultForm = (target, resource, service, initialRecord, buildForm) => {
 
     const [record, setRecord] = useState(initialRecord)
 
-    const inputsHandler = (e) => {
-      e.preventDefault && e.preventDefault();
-      setRecord({ ...record, [e.target.name]: e.target.value })
+    const onChange = (e) => {
+      if (e.preventDefault) e.preventDefault();
+
+      inputsHandler(e.target.name, e.target.value);
+    }
+
+    const inputsHandler = (property, value) => {
+      setRecord({ ...record, [property]: value })
     }
 
     const save = async (e) => {
@@ -68,7 +73,7 @@ const DefaultForm = (target, resource, service, initialRecord, buildForm) => {
                         name="id"
                         value={record.id}
                       />
-                      {buildForm(record, inputsHandler)}
+                      {buildForm(record, onChange)}
                       <div className="text-right">
                         <Button
                           color="danger"

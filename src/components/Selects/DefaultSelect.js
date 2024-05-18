@@ -7,7 +7,7 @@ const DefaultSelect = (recordName, inputName, service, getLabel) => {
     const [options, setOptions] = useState([]);
     const [id, setId] = useState(value?.id);
 
-    const handleChange = (e) => {
+    const _onChange = (e) => {
       e.preventDefault();
       setId(e.target.value);
       const record = options.find(r => `${r.id}` === e.target.value);
@@ -30,6 +30,10 @@ const DefaultSelect = (recordName, inputName, service, getLabel) => {
       setIsLoading(false);
     }, [isLoading]);
 
+    useEffect(() => {
+      setId(id);
+    }, [options, id]);
+
     return (
       <>
         <Input
@@ -38,7 +42,7 @@ const DefaultSelect = (recordName, inputName, service, getLabel) => {
           type="select"
           name={name}
           value={id}
-          onChange={handleChange}
+          onChange={_onChange}
         >
           <option value="">Selecione uma {recordName}</option>
           {

@@ -12,7 +12,7 @@ const initalRecord = {
   sigla: ''
 }
 
-const BuildForm = (record, inputsHandler) => {
+const BuildForm = (record, onChange) => {
   return (
     <>
       <Row>
@@ -29,7 +29,7 @@ const BuildForm = (record, inputsHandler) => {
               type="text"
               placeholder="Temperatura"
               name="nome"
-              onChange={inputsHandler}
+              onChange={onChange}
               value={record.nome}
             />
           </FormGroup>
@@ -47,7 +47,7 @@ const BuildForm = (record, inputsHandler) => {
               type="text"
               placeholder="Celsius"
               name="unidadeMedida"
-              onChange={inputsHandler}
+              onChange={onChange}
               value={record.unidadeMedida}
             />
           </FormGroup>
@@ -65,7 +65,7 @@ const BuildForm = (record, inputsHandler) => {
               type="text"
               placeholder="°C"
               name="sigla"
-              onChange={inputsHandler}
+              onChange={onChange}
               value={record.sigla}
             />
           </FormGroup>

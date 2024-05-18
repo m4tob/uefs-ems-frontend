@@ -1,150 +1,157 @@
-import React from 'react';
-import Header from "components/Headers/Header";
-import { useEffect, useState } from "react";
-import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Row } from "reactstrap";
+import ZonaSelect from "components/Selects/ZonaSelect";
+import { Col, FormGroup, Input, Row } from "reactstrap";
 import UdeService from "services/UdeService";
-import {
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import DefaultForm from "views/DefaultForm";
 
-const RecordForm = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const navigate = useNavigate();
-
-  const params = useParams()
-  const id = params?.id;
-
-  const [record, setRecord] = useState({
-    id: id,
-    nome: '',
-    unidadeMedida: '',
-    sigla: ''
-  })
-
-  const inputsHandler = (e) => {
-    e.preventDefault();
-    setRecord({ ...record, [e.target.name]: e.target.value })
-  }
-
-  useEffect(() => {
-    async function fetchData() {
-      const response = await UdeService.get(id);
-      if (response.data) {
-        setRecord(response.data);
-      }
-    }
-    if (isLoading && id) {
-      fetchData();
-    }
-    setIsLoading(false);
-  }, [id, isLoading]);
-
-  return (
-    <>
-      <Header />
-      <Container className="mt--7" fluid>
-        <Row className="mt-5">
-          <div className="col">
-            <Card className="bg-default shadow">
-              <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">{id ? 'Editar UDE' : 'Adicionar UDE'}</h3>
-              </CardHeader>
-              <CardBody>
-                <Form>
-                  <div className="pl-lg-4">
-                    <Row>
-                      <Input
-                        id="input-id"
-                        type="hidden"
-                        name="id"
-                        value={record.id}
-                      />
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                          >
-                            Nome
-                          </label>
-                          <Input
-                            id="input-nome"
-                            className="form-control-alternative"
-                            type="text"
-                            placeholder="Temperatura"
-                            name="nome"
-                            onChange={inputsHandler}
-                            value={record.nome}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="3">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                          >
-                            Unidade de Medida
-                          </label>
-                          <Input
-                            id="input-unidade-medida"
-                            className="form-control-alternative"
-                            type="text"
-                            placeholder="Celsius"
-                            name="unidadeMedida"
-                            onChange={inputsHandler}
-                            value={record.unidadeMedida}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="2">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                          >
-                            Sigla
-                          </label>
-                          <Input
-                            id="input-sigla"
-                            className="form-control-alternative"
-                            type="text"
-                            placeholder="°C"
-                            name="sigla"
-                            onChange={inputsHandler}
-                            value={record.sigla}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <div className="text-right">
-                      <Button
-                        color="danger"
-                        onClick={() => {
-                          navigate("/admin/Udes");
-                        }}
-                      >
-                        Cancelar
-                      </Button>
-
-                      <Button
-                        color="success"
-                        onClick={async () => {
-                          await UdeService.save(record);
-                          navigate("/admin/Udes");
-                        }}
-                      >
-                        Salvar
-                      </Button>
-                    </div>
-                  </div>
-                </Form>
-              </CardBody>
-            </Card>
-          </div>
-        </Row>
-      </Container>
-    </>
-  );
+const target = '/admin/udes'
+const resource = 'Un. Detec. de Emergência'
+const service = UdeService
+const initalRecord = {
+  tipo: '',
+  label: '',
+  mac: '',
+  latitude: 0,
+  longitude: 0,
+  operatingRange: 0,
+  zona: {},
 }
 
-export default RecordForm;
+const BuildForm = (record, inputsHandler) => {
+  return (
+    // tipo: '', label: '', mac: '', latitude: 0, longitude: 0, operatingRange: 0, zona: {},
+    <>
+      <Row>
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              Tipo
+            </label>
+            <Input
+              id="input-tipo"
+              className="form-control-alternative"
+              type="text"
+              placeholder="Tipo"
+              name="tipo"
+              onChange={inputsHandler}
+              value={record.tipo}
+            />
+          </FormGroup>
+        </Col>
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              Label
+            </label>
+            <Input
+              id="input-label"
+              className="form-control-alternative"
+              type="text"
+              placeholder="Label"
+              name="label"
+              onChange={inputsHandler}
+              value={record.label}
+            />
+          </FormGroup>
+        </Col>
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              MAC
+            </label>
+            <Input
+              id="input-mac"
+              className="form-control-alternative"
+              type="text"
+              placeholder="MAC"
+              name="mac"
+              onChange={inputsHandler}
+              value={record.mac}
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row>
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              Zona
+            </label>
+            <ZonaSelect
+              id="input-zona"
+              className="form-control-alternative"
+              name="zona"
+              onChange={inputsHandler}
+              value={record.zona}
+            />
+          </FormGroup>
+        </Col>
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              Latitude
+            </label>
+            <Input
+              id="input-latitude"
+              className="form-control-alternative"
+              type="text"
+              placeholder="Latitude"
+              name="latitude"
+              onChange={inputsHandler}
+              value={record.latitude}
+            />
+          </FormGroup>
+        </Col>
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              Longitude
+            </label>
+            <Input
+              id="input-longitude"
+              className="form-control-alternative"
+              type="text"
+              placeholder="Longitude"
+              name="longitude"
+              onChange={inputsHandler}
+              value={record.longitude}
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row>
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              Alcance
+            </label>
+            <Input
+              id="input-operatingRange"
+              className="form-control-alternative"
+              type="text"
+              placeholder="Alcance"
+              name="operatingRange"
+              onChange={inputsHandler}
+              value={record.operatingRange}
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+    </>
+  )
+}
+
+export default DefaultForm(target, resource, service, initalRecord, BuildForm)

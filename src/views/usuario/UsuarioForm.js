@@ -12,7 +12,7 @@ const initalRecord = {
   role: ''
 }
 
-const BuildForm = (record, inputsHandler) => {
+const BuildForm = (record, onChange) => {
   return (
     <>
       <Row>
@@ -29,7 +29,7 @@ const BuildForm = (record, inputsHandler) => {
               type="text"
               placeholder="Matheus B."
               name="nome"
-              onChange={inputsHandler}
+              onChange={onChange}
               value={record.nome}
             />
           </FormGroup>
@@ -47,7 +47,8 @@ const BuildForm = (record, inputsHandler) => {
               type="email"
               placeholder="email@example.com"
               name="email"
-              onChange={inputsHandler}
+              autoComplete="new-email"
+              onChange={onChange}
               value={record.email}
             />
           </FormGroup>
@@ -65,7 +66,8 @@ const BuildForm = (record, inputsHandler) => {
               type="password"
               placeholder="123456"
               name="password"
-              onChange={inputsHandler}
+              autoComplete="new-password"
+              onChange={onChange}
               value={record.password}
             />
           </FormGroup>
@@ -83,7 +85,7 @@ const BuildForm = (record, inputsHandler) => {
               type="select"
               placeholder="ADMIN"
               name="role"
-              onChange={inputsHandler}
+              onChange={onChange}
               value={record.role}
             >
               <option value="">Selecione uma Role</option>

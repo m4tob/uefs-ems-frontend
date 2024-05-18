@@ -25,10 +25,17 @@ const DefaultService = (baseUrl) => {
     },
 
     async save(record) {
-      if (record.id) {
-        return this.edit(record.id, record);
+      const _record = { ...record };
+      Object.keys(_record).forEach(key => {
+        if (!_record[key]) {
+          _record[key] = null;
+        }
+      })
+
+      if (_record.id) {
+        return this.edit(_record.id, _record);
       }
-      return this.create(record);
+      return this.create(_record);
     },
 
     async create(record) {

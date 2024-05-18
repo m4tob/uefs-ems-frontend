@@ -31,8 +31,7 @@ const Option = (props) => {
   );
 };
 
-const BuildForm = (record, inputsHandler) => {
-  console.log(record)
+const BuildForm = (record, onChange) => {
   const [isLoading, setIsLoading] = useState(true);
   const [grandezas, setGrandezas] = useState([]);
   const [grandezasSelected, setGrandezasSelected] = useState();
@@ -42,22 +41,21 @@ const BuildForm = (record, inputsHandler) => {
       try {
         const response = await GrandezaService.list();
         setGrandezas(response);
-        console.log(record.grandezas)
         setGrandezasSelected(record.grandezas.map(g => ({ value: g, label: g.nome })))
       } catch (error) {
         console.error(error);
         alert('Erro ao carregar grandezas!');
       }
     }
-    if (isLoading && record.id) {
+    if (isLoading) {
       fetchData();
       setIsLoading(false);
     }
-  }, [isLoading, record.id, record.grandezas]);
+  }, [isLoading, record.grandezas]);
 
-  const handleChange = (selected) => {
+  const grandezasOnChange = (selected) => {
     setGrandezasSelected(selected);
-    inputsHandler({ target: { name: 'grandezas', value: selected.map(s => s.value) } })
+    onChange({ target: { name: 'grandezas', value: selected.map(s => s.value) } })
   };
 
   return (
@@ -76,7 +74,7 @@ const BuildForm = (record, inputsHandler) => {
               type="text"
               placeholder="Incêndio"
               name="nome"
-              onChange={inputsHandler}
+              onChange={onChange}
               value={record.nome}
             />
           </FormGroup>
@@ -99,10 +97,10 @@ const BuildForm = (record, inputsHandler) => {
               components={{
                 Option
               }}
-              onChange={handleChange}
+              onChange={grandezasOnChange}
               allowSelectAll={true}
               value={grandezasSelected}
-              placeholder="Selecione uma ou mais Grandezas"
+              placeholder="Selecione a(s) Grandezas"
             />
           </FormGroup>
         </Col>

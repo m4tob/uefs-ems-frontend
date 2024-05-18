@@ -10,7 +10,7 @@ const initalRecord = {
   nome: ''
 }
 
-const BuildForm = (record, inputsHandler) => {
+const BuildForm = (record, onChange) => {
   return (
     <>
       <Row>
@@ -27,7 +27,7 @@ const BuildForm = (record, inputsHandler) => {
               type="text"
               placeholder="Zona X"
               name="nome"
-              onChange={inputsHandler}
+              onChange={onChange}
               value={record.nome}
             />
           </FormGroup>
