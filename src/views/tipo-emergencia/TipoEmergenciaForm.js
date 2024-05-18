@@ -1,150 +1,114 @@
-import React from 'react';
-import Header from "components/Headers/Header";
 import { useEffect, useState } from "react";
-import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Row } from "reactstrap";
+import ReactSelect, { components } from "react-select";
+import { Col, FormGroup, Input, Row } from "reactstrap";
+import GrandezaService from "services/GrandezaService";
 import TipoEmergenciaService from "services/TipoEmergenciaService";
-import {
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import DefaultForm from "views/DefaultForm";
 
-const RecordForm = () => {
+const target = '/admin/tipos-emergencia'
+const resource = 'Tipo de Emergência'
+const service = TipoEmergenciaService
+const initalRecord = {
+  id: '',
+  nome: '',
+  grandezas: []
+}
+
+const Option = (props) => {
+  return (
+    <div>
+      <components.Option {...props}>
+        <div className="d-flex justify-content-between">
+          <label>{props.label}</label>
+          <input
+            type="checkbox"
+            checked={props.isSelected}
+            onChange={() => null}
+          />{" "}
+        </div>
+      </components.Option>
+    </div>
+  );
+};
+
+const BuildForm = (record, inputsHandler) => {
+  console.log(record)
   const [isLoading, setIsLoading] = useState(true);
-
-  const navigate = useNavigate();
-
-  const params = useParams()
-  const id = params?.id;
-
-  const [record, setRecord] = useState({
-    id: id,
-    nome: '',
-    unidadeMedida: '',
-    sigla: ''
-  })
-
-  const inputsHandler = (e) => {
-    e.preventDefault();
-    setRecord({ ...record, [e.target.name]: e.target.value })
-  }
+  const [grandezas, setGrandezas] = useState([]);
+  const [grandezasSelected, setGrandezasSelected] = useState();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await TipoEmergenciaService.get(id);
-      if (response.data) {
-        setRecord(response.data);
+      try {
+        const response = await GrandezaService.list();
+        setGrandezas(response);
+        console.log(record.grandezas)
+        setGrandezasSelected(record.grandezas.map(g => ({ value: g, label: g.nome })))
+      } catch (error) {
+        console.error(error);
+        alert('Erro ao carregar grandezas!');
       }
     }
-    if (isLoading && id) {
+    if (isLoading && record.id) {
       fetchData();
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  }, [id, isLoading]);
+  }, [isLoading, record.id, record.grandezas]);
+
+  const handleChange = (selected) => {
+    setGrandezasSelected(selected);
+    inputsHandler({ target: { name: 'grandezas', value: selected.map(s => s.value) } })
+  };
 
   return (
     <>
-      <Header />
-      <Container className="mt--7" fluid>
-        <Row className="mt-5">
-          <div className="col">
-            <Card className="bg-default shadow">
-              <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">{id ? 'Editar Tipo de Emergência' : 'Adicionar Tipo de Emergência'}</h3>
-              </CardHeader>
-              <CardBody>
-                <Form>
-                  <div className="pl-lg-4">
-                    <Row>
-                      <Input
-                        id="input-id"
-                        type="hidden"
-                        name="id"
-                        value={record.id}
-                      />
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                          >
-                            Nome
-                          </label>
-                          <Input
-                            id="input-nome"
-                            className="form-control-alternative"
-                            type="text"
-                            placeholder="Temperatura"
-                            name="nome"
-                            onChange={inputsHandler}
-                            value={record.nome}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="3">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                          >
-                            Unidade de Medida
-                          </label>
-                          <Input
-                            id="input-unidade-medida"
-                            className="form-control-alternative"
-                            type="text"
-                            placeholder="Celsius"
-                            name="unidadeMedida"
-                            onChange={inputsHandler}
-                            value={record.unidadeMedida}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="2">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                          >
-                            Sigla
-                          </label>
-                          <Input
-                            id="input-sigla"
-                            className="form-control-alternative"
-                            type="text"
-                            placeholder="°C"
-                            name="sigla"
-                            onChange={inputsHandler}
-                            value={record.sigla}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <div className="text-right">
-                      <Button
-                        color="danger"
-                        onClick={() => {
-                          navigate("/admin/TipoEmergencias");
-                        }}
-                      >
-                        Cancelar
-                      </Button>
-
-                      <Button
-                        color="success"
-                        onClick={async () => {
-                          await TipoEmergenciaService.save(record);
-                          navigate("/admin/TipoEmergencias");
-                        }}
-                      >
-                        Salvar
-                      </Button>
-                    </div>
-                  </div>
-                </Form>
-              </CardBody>
-            </Card>
-          </div>
-        </Row>
-      </Container>
+      <Row>
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              Nome
+            </label>
+            <Input
+              id="input-nome"
+              className="form-control-alternative"
+              type="text"
+              placeholder="Incêndio"
+              name="nome"
+              onChange={inputsHandler}
+              value={record.nome}
+            />
+          </FormGroup>
+        </Col>
+        {/* A multiple line checkbox with a CheckboxGroup to be stored in grandezas */}
+        <Col lg="4">
+          <FormGroup>
+            <label
+              className="form-control-label"
+            >
+              Grandezas
+            </label>
+            <ReactSelect
+              id="input-grandezas"
+              className="form-control-alternative form-control-partial"
+              options={grandezas.map((g) => ({ value: g, label: g.nome }))}
+              isMulti
+              closeMenuOnSelect={false}
+              hideSelectedOptions={false}
+              components={{
+                Option
+              }}
+              onChange={handleChange}
+              allowSelectAll={true}
+              value={grandezasSelected}
+              placeholder="Selecione uma ou mais Grandezas"
+            />
+          </FormGroup>
+        </Col>
+      </Row>
     </>
-  );
+  )
 }
 
-export default RecordForm;
+export default DefaultForm(target, resource, service, initalRecord, BuildForm)

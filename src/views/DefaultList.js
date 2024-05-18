@@ -107,7 +107,7 @@ const DefaultList = (service, resource, recordsName, headers, attributes) => {
             <div className="col">
               <Card className="bg-default shadow">
                 <CardHeader className="bg-transparent border-0">
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div className="d-flex justify-content-between">
                     <h3 className="text-white mb-0">Gerenciamento de {recordsName}</h3>
                     <Button
                       color="primary"

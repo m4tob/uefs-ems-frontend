@@ -24,7 +24,9 @@ const DefaultSelect = (recordName, inputName, service, getLabel) => {
           alert('Erro ao carregar opções');
         }
       }
-      fetchData();
+      if (isLoading) {
+        fetchData();
+      }
       setIsLoading(false);
     }, [isLoading]);
 
