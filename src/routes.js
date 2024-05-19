@@ -33,6 +33,7 @@ import UsuarioForm from "views/usuario/UsuarioForm.js";
 import Usuarios from "views/usuario/UsuarioList.js";
 import ZonaForm from "views/zona/ZonaForm.js";
 import Zonas from "views/zona/ZonaList.js";
+import Monitoramento from "views/Monitoramento.js";
 
 const resources = [
   { name: "usuarios", listComponent: <Usuarios />, formComponent: <UsuarioForm />, label: "Usuários", icon: 'ni-single-02', color: "text-gray" },
@@ -83,8 +84,16 @@ const routes = [
     icon: `ni ${resource.icon} ${resource.color}`,
     component: resource.listComponent,
     layout: "/admin",
-
   })),
+  {
+    // Data visualization
+    path: "/monitoramento",
+    name: "Monitoramento",
+    icon: "ni ni-chart-bar-32 text-yellow",
+    component: <Monitoramento />,
+    layout: "/admin",
+
+  },
   {
     path: "/icons",
     name: "Icons",
