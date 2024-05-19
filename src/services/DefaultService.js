@@ -27,7 +27,7 @@ const DefaultService = (baseUrl) => {
     async save(record) {
       const _record = { ...record };
       Object.keys(_record).forEach(key => {
-        if (!_record[key]) {
+        if (_record[key] === '') {
           _record[key] = null;
         }
       })

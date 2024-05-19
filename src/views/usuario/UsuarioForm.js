@@ -20,6 +20,7 @@ const BuildForm = (record, onChange) => {
           <FormGroup>
             <label
               className="form-control-label"
+              for="input-nome"
             >
               Nome
             </label>
@@ -38,6 +39,7 @@ const BuildForm = (record, onChange) => {
           <FormGroup>
             <label
               className="form-control-label"
+              for="input-email"
             >
               Email
             </label>
@@ -57,6 +59,7 @@ const BuildForm = (record, onChange) => {
           <FormGroup>
             <label
               className="form-control-label"
+              for="input-password"
             >
               Senha
             </label>
@@ -76,6 +79,7 @@ const BuildForm = (record, onChange) => {
           <FormGroup>
             <label
               className="form-control-label"
+              for="input-role"
             >
               Role
             </label>

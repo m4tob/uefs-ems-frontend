@@ -23,33 +23,34 @@ const EspecificacaoComponent = ({ index, id, grandeza, valorMinimo, valorMaximo,
     onChange(index, e.target.name, e.target.value);
   }
 
-  const _onRemove = (e) => {
-    if (!onRemove) {
-      return;
-    }
+  const onChangeNumber = (e) => {
+    if (e.preventDefault) e.preventDefault();
 
-    onRemove(index);
+    const value = e.target.value ? parseFloat(e.target.value) : ''
+    onChange(index, e.target.name, value);
   }
 
   return (
     <>
       <Input
-        id="input-especificacao-id"
+        id={`input-especificacao-id-${index}`}
         type="hidden"
         name="id"
         value={id}
         onChange={_onChange}
       />
-      <div className="d-flex align-items-center justify-content-between">
+      <div className="d-flex align-items-center">
         <Row>
           <Col lg="4" sm="6">
             <FormGroup>
               <label
                 className="form-control-label"
+                for={`input-especificacao-grandeza-${index}`}
               >
                 Grandeza
               </label>
               <GrandezaSelect
+                id={`input-especificacao-grandeza-${index}`}
                 name="grandeza"
                 value={grandeza}
                 onChange={_onChange}
@@ -60,17 +61,18 @@ const EspecificacaoComponent = ({ index, id, grandeza, valorMinimo, valorMaximo,
             <FormGroup>
               <label
                 className="form-control-label"
+                for={`input-especificacao-valor-minimo-${index}`}
               >
                 Valor Mínimo
               </label>
               <Input
-                id="input-valor-minimo"
+                id={`input-especificacao-valor-minimo-${index}`}
                 className="form-control-alternative"
                 type="number"
                 placeholder="0"
                 name="valorMinimo"
                 value={valorMinimo}
-                onChange={_onChange}
+                onChange={onChangeNumber}
               />
             </FormGroup>
           </Col>
@@ -78,16 +80,17 @@ const EspecificacaoComponent = ({ index, id, grandeza, valorMinimo, valorMaximo,
             <FormGroup>
               <label
                 className="form-control-label"
+                for={`input-especificacao-valor-maximo-${index}`}
               >
                 Valor Máximo
               </label>
               <Input
-                id="input-valor-maximo"
+                id={`input-especificacao-valor-maximo-${index}`}
                 className="form-control-alternative"
                 type="number"
                 placeholder="100"
                 name="valorMaximo"
-                onChange={_onChange}
+                onChange={onChangeNumber}
                 value={valorMaximo}
               />
             </FormGroup>
@@ -96,11 +99,12 @@ const EspecificacaoComponent = ({ index, id, grandeza, valorMinimo, valorMaximo,
             <FormGroup>
               <label
                 className="form-control-label"
+                for={`input-especificacao-sinal-${index}`}
               >
                 Tipo de Sinal
               </label>
               <Input
-                id="input-sinal"
+                id={`input-especificacao-sinal-${index}`}
                 className="form-control-alternative"
                 type="select"
                 placeholder="DIGITAL"
@@ -117,12 +121,12 @@ const EspecificacaoComponent = ({ index, id, grandeza, valorMinimo, valorMaximo,
         </Row>
         {enableRemove && (
           <Button
-            color="danger"
+            color="danger rounded-circle shadow"
             size="sm"
             className="ml-3 ml-sm-4"
-            onClick={_onRemove}
+            onClick={() => onRemove(index)}
           >
-            <i className="fas fa-trash" />
+            <i className="fas fa-close" />
           </Button>
         )}
       </div>
@@ -168,14 +172,16 @@ const SensorForm = () => {
     inputsHandler('especificacoes', newList);
   }
 
-  const removeEspecificacao = (index) => {
+  const especificacaoOnRemove = (index) => {
     if (record.especificacoes.length <= 1) {
       return
     }
 
-    const newList = [...record.especificacoes]
-    newList.splice(index, 1)
-    inputsHandler('especificacoes', newList);
+    if (window.confirm('Deseja realmente excluir este registro?')) {
+      const newList = [...record.especificacoes]
+      newList.splice(index, 1)
+      inputsHandler('especificacoes', newList);
+    }
   }
 
   const save = async (e) => {
@@ -185,7 +191,7 @@ const SensorForm = () => {
       _record.especificacoes = _record.especificacoes.filter(e => e.grandeza);
       _record.especificacoes.forEach(e => {
         Object.keys(e).forEach(key => {
-          if (!e[key]) {
+          if (e[key] === '') {
             e[key] = null;
           }
         })
@@ -238,6 +244,7 @@ const SensorForm = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
+                            for="input-modelo"
                           >
                             Modelo
                           </label>
@@ -256,6 +263,7 @@ const SensorForm = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
+                            for="input-descricao"
                           >
                             Descrição
                           </label>
@@ -274,24 +282,26 @@ const SensorForm = () => {
                     <Row>
                       <Col lg="12">
                         <FormGroup>
-                          <label>Especificações</label>
-                          <Button
-                            className="ml-3"
-                            color="primary"
-                            size="sm"
-                            onClick={() => {
-                              const especificacoes = [...record.especificacoes];
-                              especificacoes.push({ id: '', grandeza: '', valorMinimo: '', valorMaximo: '', sinal: '' });
+                          <div className="d-flex align-items-center">
+                            <h4 className="mb-0 text-white">Especificações</h4>
+                            <Button
+                              className="ml-3 rounded-circle shadow"
+                              color="primary"
+                              size="sm"
+                              onClick={() => {
+                                const newList = [...record.especificacoes];
+                                newList.push({ id: '', grandeza: '', valorMinimo: '', valorMaximo: '', sinal: '' });
 
-                              inputsHandler('especificacoes', especificacoes)
-                            }}
-                          >
-                            <i className="fas fa-plus" />
-                          </Button>
+                                inputsHandler('especificacoes', newList)
+                              }}
+                            >
+                              <i className="fas fa-plus" />
+                            </Button>
+                          </div>
                           {
                             record.especificacoes.map((especificacao, index) => {
                               return (
-                                <Row key={index}>
+                                <Row key={`especificacao-${index}`}>
                                   <Col lg="12">
                                     <EspecificacaoComponent
                                       index={index}
@@ -302,8 +312,9 @@ const SensorForm = () => {
                                       sinal={especificacao.sinal}
                                       onChange={especificacaoOnChange}
                                       enableRemove={record.especificacoes.length > 1}
-                                      onRemove={removeEspecificacao}
+                                      onRemove={especificacaoOnRemove}
                                     />
+                                    {index < record.especificacoes.length - 1 && <hr className="mt-2 mb-4 bg-white" />}
                                   </Col>
                                 </Row>
                               )
