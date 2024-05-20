@@ -16,11 +16,7 @@
 
 */
 import Index from "views/Index.js";
-import Icons from "views/examples/Icons.js";
 import Login from "views/Login.js";
-import Maps from "views/examples/Maps.js";
-import Profile from "views/examples/Profile.js";
-import Tables from "views/examples/Tables.js";
 import GrandezaForm from "views/grandeza/GrandezaForm.js";
 import Grandezas from "views/grandeza/GrandezasList.js";
 import SensorForm from "views/sensor/SensorForm.js";
@@ -93,38 +89,6 @@ const routes = [
     component: <Monitoramento />,
     layout: "/admin",
 
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: <Icons />,
-    layout: "/admin",
-    show: false,
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
-    layout: "/admin",
-    show: false,
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <Profile />,
-    layout: "/admin",
-    show: false,
-  },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
-    layout: "/admin",
-    show: false,
   },
 ];
 export default routes;
