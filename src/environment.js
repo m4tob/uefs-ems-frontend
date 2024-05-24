@@ -1,5 +1,5 @@
 const envs = {
-  backendUrl: 'http://localhost:3000',
+  backendUrl: 'http://localhost:3001',
 };
 
 export default envs;

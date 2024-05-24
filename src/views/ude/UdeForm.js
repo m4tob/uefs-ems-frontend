@@ -26,6 +26,7 @@ const MonitoramentoComponent = ({
   grandeza,
   thresholdMinimo,
   thresholdMaximo,
+  taxaVariacaoMinima,
   ativo,
   onChange,
   enableRemove,
@@ -143,7 +144,26 @@ const MonitoramentoComponent = ({
               />
             </FormGroup>
           </Col>
-          <Col xs="12">
+          <Col lg="8">
+            <FormGroup className="mb-0">
+              <label
+                className="form-control-label mb-0"
+                for={`input-monitoramento-taxa-variacao-minima-${dIndex}-${mIndex}`}
+              >
+                Taxa Variação Mínima
+              </label>
+              <Input
+                id={`input-monitoramento-taxa-variacao-minima-${dIndex}-${mIndex}`}
+                className="form-control-alternative"
+                type="number"
+                placeholder="Taxa Variação Mínima"
+                name="taxaVariacaoMinima"
+                onChange={onChangeNumber}
+                value={taxaVariacaoMinima}
+              />
+            </FormGroup>
+          </Col>
+          <Col xs="4" className="mt-4">
             <div className="mt-2 d-flex align-items-center justify-content-between">
               <FormGroup className="m-0 pl-4 custom-checkbox">
                 <Input
@@ -172,7 +192,7 @@ const MonitoramentoComponent = ({
                   className="ml-3 ml-sm-4"
                   onClick={() => onRemove(dIndex, mIndex)}
                 >
-                  <i className="fas fa-close" />
+                  <i className="fas fa-trash" />
                 </Button>
               )}
             </div>
@@ -267,7 +287,7 @@ const DeteccaoEmergenciaComponent = ({
             {
               monitoramentos?.map((monitoramento, _index) => {
                 return (
-                  <Col lg="3">
+                  <Col lg="4">
                     <MonitoramentoComponent
                       dIndex={index}
                       mIndex={_index}
@@ -276,6 +296,7 @@ const DeteccaoEmergenciaComponent = ({
                       grandeza={monitoramento.grandeza}
                       thresholdMinimo={monitoramento.thresholdMinimo}
                       thresholdMaximo={monitoramento.thresholdMaximo}
+                      taxaVariacaoMinima={monitoramento.taxaVariacaoMinima}
                       ativo={monitoramento.ativo}
                       onChange={monitoramentoOnChange}
                       enableRemove={monitoramentos.length > 1}
@@ -317,6 +338,7 @@ const UdeForm = () => {
         grandeza: '',
         thresholdMinimo: '',
         thresholdMaximo: '',
+        taxaVariacaoMinima: '',
         ativo: true,
       }],
     }],

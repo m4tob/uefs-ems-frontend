@@ -87,6 +87,7 @@ const Login = () => {
                     name="email"
                     autoComplete="email"
                     onChange={inputsHandler}
+                    onKeyUp={(e) => { if (e.key === 'Enter') signin(e) }}
                   />
                 </InputGroup>
               </FormGroup>
@@ -103,6 +104,7 @@ const Login = () => {
                     name="password"
                     autoComplete="password"
                     onChange={inputsHandler}
+                    onKeyUp={(e) => { if (e.key === 'Enter') signin(e) }}
                   />
                 </InputGroup>
               </FormGroup>
