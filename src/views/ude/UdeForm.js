@@ -394,7 +394,7 @@ const UdeForm = () => {
         d.monitoramentos = d.monitoramentos.filter(m => m.sensor && m.grandeza);
         d.monitoramentos.forEach(m => {
           Object.keys(m).forEach(key => {
-            if (!m[key] === '') {
+            if (m[key] === '') {
               m[key] = null;
             }
           })
