@@ -26,6 +26,7 @@ const MonitoramentoComponent = ({
   grandeza,
   thresholdMinimo,
   thresholdMaximo,
+  intervaloAmostragem,
   taxaVariacaoMinima,
   ativo,
   onChange,
@@ -144,26 +145,47 @@ const MonitoramentoComponent = ({
               />
             </FormGroup>
           </Col>
-          <Col lg="8">
+          <Col lg="6">
+            <FormGroup className="mb-0">
+              <label
+                className="form-control-label mb-0"
+                for={`input-monitoramento-intervalo-amostragem-${dIndex}-${mIndex}`}
+              >
+                Intervalo Amostragem
+              </label>
+              <Input
+                id={`input-monitoramento-intervalo-amostragem-${dIndex}-${mIndex}`}
+                className="form-control-alternative"
+                type="number"
+                placeholder="Em segundos"
+                name="intervaloAmostragem"
+                onChange={onChangeNumber}
+                value={intervaloAmostragem}
+              />
+            </FormGroup>
+          </Col>
+          <Col lg="6">
             <FormGroup className="mb-0">
               <label
                 className="form-control-label mb-0"
                 for={`input-monitoramento-taxa-variacao-minima-${dIndex}-${mIndex}`}
               >
-                Taxa Variação Mínima
+                Taxa Variação Mínima (%)
               </label>
               <Input
                 id={`input-monitoramento-taxa-variacao-minima-${dIndex}-${mIndex}`}
                 className="form-control-alternative"
                 type="number"
-                placeholder="Taxa Variação Mínima"
+                placeholder="0.1"
+                min="0"
+                max="1"
                 name="taxaVariacaoMinima"
                 onChange={onChangeNumber}
                 value={taxaVariacaoMinima}
               />
             </FormGroup>
           </Col>
-          <Col xs="4" className="mt-4">
+          <Col xs="12">
             <div className="mt-2 d-flex align-items-center justify-content-between">
               <FormGroup className="m-0 pl-4 custom-checkbox">
                 <Input
@@ -296,6 +318,7 @@ const DeteccaoEmergenciaComponent = ({
                       grandeza={monitoramento.grandeza}
                       thresholdMinimo={monitoramento.thresholdMinimo}
                       thresholdMaximo={monitoramento.thresholdMaximo}
+                      intervaloAmostragem={monitoramento.intervaloAmostragem}
                       taxaVariacaoMinima={monitoramento.taxaVariacaoMinima}
                       ativo={monitoramento.ativo}
                       onChange={monitoramentoOnChange}
@@ -338,6 +361,7 @@ const UdeForm = () => {
         grandeza: '',
         thresholdMinimo: '',
         thresholdMaximo: '',
+        intervaloAmostragem: '',
         taxaVariacaoMinima: '',
         ativo: true,
       }],
