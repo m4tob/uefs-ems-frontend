@@ -59,7 +59,6 @@ const Admin = (props) => {
       if (!route?.roles?.includes(accountRole)) {
         navigate('/admin/index');
         return
-        // TODO(permissions) ISSO AQUI E A TELA DE SELEÇÃO DE LOCALIDADE
       }
     };
     checkPermissions();
